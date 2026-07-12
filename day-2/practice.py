@@ -17,6 +17,13 @@
 #     print(f"Receipt #{n}")
 
 
-for n in range(1, 21):
-    if(n % 2 == 0):
-        print(n)
+# for n in range(1, 21):
+#     if(n % 2 == 0):
+#         print(n)
+
+
+
+def apply_discount(price, percent=10):
+    return price - (1-(percent / 100)) 
+
+print(apply_discount(1000))   
