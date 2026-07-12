@@ -13,5 +13,10 @@
 
 # temperature_label(10)
 
-for n in range(1, 10):
-    print(f"Receipt #{n}")
+# for n in range(1, 10):
+#     print(f"Receipt #{n}")
+
+
+for n in range(1, 21):
+    if(n % 2 == 0):
+        print(n)
