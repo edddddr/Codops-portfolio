@@ -23,7 +23,17 @@
 
 
 
-def apply_discount(price, percent=10):
-    return price - (1-(percent / 100)) 
+# def apply_discount(price, percent=10):
+#     return price - (1-(percent / 100)) 
 
-print(apply_discount(1000))   
+# print(apply_discount(1000))   
+
+
+
+def count_down(n=5):
+    while(1 <= n):
+        print(n)
+        n -=1
+    print("Liftoff!")    
+
+count_down()
