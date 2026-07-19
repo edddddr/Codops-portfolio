@@ -15,10 +15,21 @@ class Account:
 # s.deposit(500) # inherit
 
 # Super and child class
-class SavingsAccount(Account):
- def __init__(self, owner, balance=0, rate=0.05):
-    super().__init__(owner, balance) # parent setup
+# class SavingsAccount(Account):
+#  def __init__(self, owner, balance=0, rate=0.05):
+#     super().__init__(owner, balance) # parent setup
 
-    self.rate = rate # the extra
-    def add_interest(self):
-        self.deposit(self.balance * self.rate) # reuse parent
+#     self.rate = rate # the extra
+#     def add_interest(self):
+#         self.deposit(self.balance * self.rate) # reuse parent
+
+
+# Method overriding
+class Account:
+ def statement(self):
+    print(f"{self.owner}: {self.balance} ETB")
+
+
+class CurrentAccount(Account):
+ def statement(self): # override
+    print(f"[Current] {self.owner}: {self.balance} ETB")
