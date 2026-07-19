@@ -40,8 +40,4 @@ class CurrentAccount(Account):
 
 accounts = [SavingAccount('Tsion', "10005060", 2000), CurrentAccount('Abebe', "10000000", 3000)]
 
-for account in accounts:
-    account.statement()
-
-# Tsion = Account('Tsion', "10005060", 2000)
-# Tsion.statement()
+    
