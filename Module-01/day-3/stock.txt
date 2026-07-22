@@ -1,0 +1,4 @@
+Amoxicillin, 15 
+Azithromycin, 9 
+Ciprofloxacin, 2 
+Metronidazole, 10 
