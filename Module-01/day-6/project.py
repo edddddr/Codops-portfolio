@@ -18,6 +18,8 @@ class Account:
         self.__balance -= amount
     def statement(self):
         print(f"Name: {self.owner}\nAcc_no: {self.account_number}\nAmount: {self.__balance} ETB")
+
+
 class SavingsAccount: 
     def __init__(self, owner, number):
         self._observers = []
@@ -38,6 +40,18 @@ class SavingsAccount:
         return 0.07
 
 
+class CurrentAccount(Account):
+    def __init__(self,owner, account_number, balance=0, overdraft=1000):
+        super().__init__(owner, account_number, balance)
+        self.overdraft = overdraft
+
+    def withdraw(self):
+        pass
+    def statement(self):
+        print(f"Account Type: Current Account\nName: {self.owner}\nAcc_no: {self.account_number}\nAmount: {self.balance} ETB")
+
+
+
 class AccountFactory:
     def __init__(self):
         self._observers = []
@@ -46,12 +60,11 @@ class AccountFactory:
     @staticmethod
     def create(kind, owner, number):
         if kind == "savings":
-            # return (owner, number)
             return SavingsAccount(owner, number)
-        # if kind == "current":
-        #     # return (owner, number)
-        #     return CurrentAccount(owner, number)
-        raise ValueError(f"Unknown: {kind}")
+        elif kind == "current":
+            return CurrentAccount(owner, number)
+        else:
+            raise ValueError(f"Unknown: {kind}")
         
         
         
