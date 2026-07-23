@@ -1,17 +1,17 @@
-def binary(list, target):
-    lo, hi = 0, len(list) -1
+# def binary(list, target):
+#     lo, hi = 0, len(list) -1
 
-    while lo <= hi:
-        mid= (lo + hi) // 2
+#     while lo <= hi:
+#         mid= (lo + hi) // 2
 
-        if list[mid] == target:
-            return "yest it's here"
-        elif list[mid] > target:
-            hi = mid -1
-        elif list[mid] < target:
-            lo = mid + 1
+#         if list[mid] == target:
+#             return "yest it's here"
+#         elif list[mid] > target:
+#             hi = mid -1
+#         elif list[mid] < target:
+#             lo = mid + 1
 
-    return -1
+#     return -1
 
 
 
@@ -28,14 +28,38 @@ def binary(list, target):
 #  return -1
 
 #  linear_search(items, target):
-def linear_search(items, target):
- for i, x in enumerate(items):
-    if x == target:
-        return i # found
- return -1 
+# def linear_search(items, target):
+#  for i, x in enumerate(items):
+#     if x == target:
+#         return i # found
+#  return -1 
 
 
-list = [1,2,3,4,5,6,7]
+# list = [1,2,3,4,5,6,7]
 
-print(binary(list, 1))
+# print(binary(list, 1))
 # binary_search(list, 4)
+
+class Account:
+ def __init__(self, owner, balance):
+    self.owner = owner
+    self.balance = balance
+
+
+ def deposit(self, amount):
+    self.balance += amount
+
+
+acc = Account()
+acc0 = Account()
+acc1 = Account()
+acc2 = Account()
+
+
+accounts = [acc0, acc1, acc2]
+accounts[2] # O(1) — jump straight to it
+accounts.append(acc) # O(1)* — amortised (occasionally resizes)
+# accounts.insert(0, x) # O(n) — every later item shifts
+
+
+# x in accounts 
