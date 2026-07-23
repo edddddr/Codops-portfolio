@@ -12,10 +12,12 @@ class Account:
         if amount <= 0:
             raise ValueError("Please enter positive integer")
         self.__balance += amount
+
     def withdraw(self, amount):
         if amount > self.__balance:
             raise ValueError("Insufficient balance")
         self.__balance -= amount
+
     def statement(self):
         print(f"Name: {self.owner}\nAcc_no: {self.account_number}\nAmount: {self.__balance} ETB")
 
@@ -53,9 +55,6 @@ class CurrentAccount(Account):
 
 
 class AccountFactory:
-    def __init__(self):
-        self._observers = []
-        self.balance = 1000
 
     @staticmethod
     def create(kind, owner, number):
@@ -70,11 +69,11 @@ class AccountFactory:
         
 class SMSAlert:
     def update(self, event):
-        print(f"[TeleBirr SMS] {event}")
+        return f"[TeleBirr SMS] {event}"
 
 class AuditLog:
         def update(self, event):
-            print(f"[Log] {event}")
+            return f"[Log] {event}"
 
             
 acc = AccountFactory.create("savings", "Dawit", "CBE-2")
