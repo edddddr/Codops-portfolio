@@ -70,3 +70,14 @@ accounts["CBE-3"] = x # O(1) — insert
 del accounts["CBE-1"] 
 
 # x in accounts 
+
+
+class Node:
+  def __init__(self, node, next):
+    self.node = node
+    self.next = next
+
+
+head = Node(acc)
+head.next = Node(acc0)
+head.next.next = Node(acc1)
