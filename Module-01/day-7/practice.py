@@ -81,3 +81,14 @@ class Node:
 head = Node(acc)
 head.next = Node(acc0)
 head.next.next = Node(acc1)
+
+
+stack = []
+stack.append(x) # push — O(1)
+stack.pop() 
+
+
+from collections import deque
+q = deque()
+q.append(x) # enqueue — O(1), joins the back
+q.popleft()
