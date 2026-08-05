@@ -26,5 +26,19 @@
   flex-shrink: 2;
 }
 
+.gallery {
+display: grid;
+grid-template-columns:
+repeat(3, 1fr);
+gap: 16px;
+}
 
 
+.feature {
+/* start at line 1, span 2 cols */
+grid-column: 1 / 3;
+grid-row: 1;
+}
+.tall {
+grid-row: span 2;
+}
