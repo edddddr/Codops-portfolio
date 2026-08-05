@@ -43,8 +43,11 @@ section{
 
 
 
+
+
 .price:hover{
     color: var(--gold);
     cursor: pointer;
 }
 .price::before { content: "ETB "; }
+
