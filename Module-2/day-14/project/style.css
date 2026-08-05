@@ -1,0 +1,55 @@
+.page{
+    display: grid;
+    /* grid-template-columns: 1fr 2fr 1fr; */
+    grid-template-rows: auto 1fr auto;
+    grid-gap: 4px;
+    width: 100%;
+    min-height: 100vh;
+}
+
+nav{
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.card{
+    background: black;
+    color: white;
+    display:flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+
+.card{
+    position: relative;
+    display:flex;
+    flex-direction: column;
+    
+    height: 100%;
+    background: black;
+    color: white;
+}
+
+.card .price {
+  margin-top: auto;
+  border: 1px solid white;
+  margin-top: 20px;
+}
+
+.badge-popular {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
