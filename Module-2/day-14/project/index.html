@@ -1,35 +1,118 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"  href="./style.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    <title>Habesha Market</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ethio Telecom - Account Dashboard Layout</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="page">
-        <div class="card1 card">
-            <nav>
-                <div class="logo">Logo</div>
-                <ul>
-                <a href="">Home</a>
-                <a href="">about</a>
-                <a href="">contact</a>
-                </ul>
-            </nav>
 
+    
+  <header class="page-header">
+    <div class="brand">
+      <span class="logo-icon">🌿</span>
+      <span class="logo-text">ethio telecom</span>
+    </div>
+    <nav class="navbar">
+      <a href="#" class="active">Dashboard</a>
+      <a href="#">Telebirr</a>
+      <a href="#">Packages</a>
+      <a href="#">Support</a>
+    </nav>
+    <div class="user-action">
+      <button class="logout-btn">Log Out</button>
+    </div>
+  </header>
+
+  
+  <aside class="sidebar-nav">
+    <div class="profile-summary">
+      <div class="avatar">U</div>
+      <div class="profile-info">
+        <h4>Abebe Balcha</h4>
+        <span>+251 911 234 567</span>
+      </div>
+    </div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">My Account</a></li>
+      <li><a href="#">Usage History</a></li>
+      <li><a href="#">Bill Payment</a></li>
+      <li><a href="#">Value Added Services</a></li>
+    </ul>
+  </aside>
+
+  
+  <main class="main-content">
+    
+    <!-- FLEXBOX TOOLBAR / METRIC SUMMARY -->
+    <div class="dashboard-toolbar">
+      <div class="welcome-text">
+        <h3>Welcome back, Abebe</h3>
+        <span>Account Status: Verified</span>
+      </div>
+      <div class="quick-actions">
+        <button class="action-btn-primary">Recharge</button>
+        <button class="action-btn-secondary">Buy Package</button>
+      </div>
+    </div>
+
+    <!-- RESPONSIVE CARD GRID USING REPEAT(AUTO-FIT, MINMAX) -->
+    <div class="dashboard-grid">
+      
+      <!-- Card 1: Telebirr Balance -->
+      <div class="stat-card">
+        <div class="card-header">
+          <span class="card-title">Telebirr Wallet</span>
         </div>
+        <div class="card-body">
+          <span class="main-metric">2,450.50 <small>ETB</small></span>
+        </div>
+        <div class="card-footer">
+          <a href="#">View Transactions ➔</a>
+        </div>
+      </div>
 
-    <div class="card menu">
-            <div><div class="price">200 ETB <span class="badge-popular">25% Discount</span></div></div>
-            <div><div class="price">300 ETB</div></div>
-            <div><div class="price">400 ETB</div></div>
+      <!-- Card 2: Voice Balance -->
+      <div class="stat-card">
+        <div class="card-header">
+          <span class="card-title">Voice Balance</span>
+        </div>
+        <div class="card-body">
+          <span class="main-metric">120 <small>Mins</small></span>
+        </div>
+        <div class="card-footer">
+          <span class="expiry-text">Expires in 5 days</span>
+        </div>
+      </div>
+
+      <!-- Card 3: RELATIVE PARENT WITH ABSOLUTE POSITIONED BADGE -->
+      <div class="stat-card active-plan-card">
+        <!-- ABSOLUTELY POSITIONED ELEMENT -->
+        <span class="absolute-badge">Active</span>
+        
+        <div class="card-header">
+          <span class="card-title">Current Data Plan</span>
+        </div>
+        <div class="card-body">
+          <span class="main-metric">15.4 <small>GB</small></span>
+        </div>
+        <div class="card-footer">
+          <span class="expiry-text">Monthly Premium Package</span>
+        </div>
+      </div>
+
     </div>
-        <div class="card3 card">card3</div>
+  </main>
+
+  <!-- 4. FOOTER -->
+  <footer class="page-footer">
+    <p>&copy; 2026 Ethio Telecom. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms & Conditions</a>
     </div>
+  </footer>
 
 </body>
 </html>
