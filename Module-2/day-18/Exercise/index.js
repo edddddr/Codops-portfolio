@@ -14,3 +14,18 @@ const withVat = prices.map(p => p * 1.15);
 // [138, 230, 184]
 // build labels for the screen
 const labels = menu.map(d => ` ${d}`);
+
+
+
+const dishes = [
+    { name: "Tibs", price: 200, veg: false },
+    { name: "Shiro", price: 120, veg: true },
+    { name: "Misir", price: 110, veg: true },
+];
+
+// keep items where the test is true
+dishes.filter(d => d.veg); // 2 items
+dishes.filter(d => d.price < 150);
+
+// first match only
+dishes.find(d => d.name === "Shiro");
