@@ -1,3 +1,5 @@
+// Array's methods
+
 const menu = ['Doro Wat', 'Tibs', 'Shiro'];
 menu[0]; // "Doro Wat" (zero-based)
 menu.length; // 3
@@ -34,3 +36,23 @@ dishes.find(d => d.name === "Shiro");
 const prices = [120, 200, 160];
 // fold a list into ONE value
 const total = prices.reduce((sum, p) => sum + p, 0); // 480
+
+
+// methods return arrays → chain them
+dishes.filter(d => d.veg).map(d => d.price).reduce((s, p) => s + p, 0); // 230
+
+
+
+// Object 
+
+const customer = {
+    name: "Almaz Bekele",
+    phone: "+251911234567",
+    city: "Addis Ababa",
+    member: true,
+};
+
+customer.name; // dot access
+customer["phone"]; // bracket access
+customer.member = false; // update
+customer.email = "a@x.et";
