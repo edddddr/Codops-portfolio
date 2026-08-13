@@ -56,3 +56,15 @@ customer.name; // dot access
 customer["phone"]; // bracket access
 customer.member = false; // update
 customer.email = "a@x.et";
+
+
+const account = {
+    owner: "Dawit",
+    balance: 5000, // ETB
+    deposit(amount) {
+            this.balance += amount;
+        return this.balance;
+    },
+};
+
+account.deposit(1500); // 6500
