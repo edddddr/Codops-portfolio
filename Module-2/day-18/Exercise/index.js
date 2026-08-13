@@ -110,3 +110,15 @@ name; // "Hanna" city; // "Bole"
 const { name: who, member = false } = user;
 // arrays destructure by POSITION
 const [first, second] = ["Tibs", "Shiro"];
+
+
+// copy an array (not a reference)
+const menu = ["Tibs", "Shiro"];
+const copy = [...menu, "Dulet"];
+
+console.log(copy)
+// merge arrays
+const full = [...menu, "Firfir", "Buna"];
+// copy + override object keys
+const user = { name: "Eyob", city: "Piassa" };
+const updated = { ...user, city: "Kazanchis" };
