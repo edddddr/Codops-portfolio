@@ -122,3 +122,12 @@ const full = [...menu, "Firfir", "Buna"];
 // copy + override object keys
 const user = { name: "Eyob", city: "Piassa" };
 const updated = { ...user, city: "Kazanchis" };
+
+
+// rest in array destructuring
+const [winner, ...others] = ["Almaz", "Dawit", "Hanna"];
+winner; // "Almaz"
+others; // ["Dawit", "Hanna"]
+// rest in object destructuring
+const { id, ...rest } = order;
+// id pulled out, rest = everything else
