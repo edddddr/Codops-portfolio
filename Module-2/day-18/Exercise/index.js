@@ -68,3 +68,18 @@ const account = {
 };
 
 account.deposit(1500); // 6500
+
+
+
+const order = {
+    id: 1042,
+    customer: "Tigist Mengistu",
+    items: [
+        { name: "Tibs", qty: 2, price: 200 },
+        { name: "Shiro", qty: 1, price: 120 },
+    ],
+};
+
+order.items[0].name; // "Tibs"
+order.items.length; // 2
+order.items.reduce((s, i) => s + i.qty * i.price, 0);
