@@ -5,12 +5,14 @@
  * Use rest parameters to accept any number of prices [2, 3].
  */
 const subtotal = (...prices) => {
-  prices.reduce((acc, cur) => {
-    return acc + cur
-  })
+  return prices.reduce((acc, cur) => {
+    return  acc + cur;
+  },0)
   
 };
 
+
+console.log(subtotal(20, 300, 400))
 
 
 /**
@@ -20,15 +22,15 @@ const subtotal = (...prices) => {
 const discountBy = (rate) => {
 
   const discount_rate = rate / 100;
-  console.log(discount_rate)
+  // console.log(discount_rate)
   
   return (amount) => {
     return discount_rate * amount;
   }
 };
 
-const tenPercentOff = discountBy(20);
-console.log(tenPercentOff(1000))
+// const tenPercentOff = discountBy(20);
+// console.log(tenPercentOff(1000))
 
 /**
  * TODO: Add withVat as a small pure helper.
@@ -53,9 +55,14 @@ function makeReceiptMaker() {
 
   return function (...items) {
     // 1. Increment orderNo [5]
+    orderNo++;
     // 2. Calculate subtotal of items [5]
+    const total = subtotal(...items)
+    console.log(total)
     // 3. Compose: apply discount, then VAT [5]
+    const overal_total = memberOff(total)
     // 4. Format and return receipt string (e.g., "#1: 538.20 ETB") [5]
+    return `#${orderNo} ${overal_total}`
   };
 }
 
