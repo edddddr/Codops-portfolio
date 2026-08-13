@@ -1,3 +1,7 @@
+import format, { withVat, VAT }
+from "./pricing.js";
+format(withVat(480)); // "552.00 ETB"   
+
 // Array's methods
 
 const menu = ['Doro Wat', 'Tibs', 'Shiro'];
@@ -141,3 +145,12 @@ order.payment?.method; // undefined
 // nullish coalescing — default only if
 // null/undefined (NOT 0 or "")
 const fee = order.fee ?? 60;
+
+
+// named exports
+export const VAT = 0.15;
+export const withVat = n => n * (1 + VAT);
+// default export (one per file)
+export default function format(n) {
+    return `${n.toFixed(2)} ETB`;
+}
