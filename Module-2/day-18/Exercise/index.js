@@ -131,3 +131,13 @@ others; // ["Dawit", "Hanna"]
 // rest in object destructuring
 const { id, ...rest } = order;
 // id pulled out, rest = everything else
+
+
+const order = { customer: { name: "Sami" } };
+// optional chaining — stop if missing
+order.customer?.name; // "Sami"
+order.payment?.method; // undefined
+// ^ no crash, even though payment missing
+// nullish coalescing — default only if
+// null/undefined (NOT 0 or "")
+const fee = order.fee ?? 60;
