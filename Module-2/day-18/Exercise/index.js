@@ -29,3 +29,8 @@ dishes.filter(d => d.price < 150);
 
 // first match only
 dishes.find(d => d.name === "Shiro");
+
+
+const prices = [120, 200, 160];
+// fold a list into ONE value
+const total = prices.reduce((sum, p) => sum + p, 0); // 480
