@@ -19,9 +19,17 @@ const qty = document.querySelector("#qty");
 // console.log(li.getAttribute("Class"))
 // console.log(li.dataset.id)
 
-console.log(items)
-items.forEach(item => console.log(item))
+// console.log(items)
+items.forEach(item => item)
 const name = [...items].map(item => item.textContent)
 
 
-console.log(name)
+// console.log(name)
+
+h1.textContent = "hello"
+h1.classList.add("active")
+h1.classList.remove("hidden")
+h1.classList.toggle("done")
+
+h1.style.color = "orange"
+console.log(h1.textContent)
