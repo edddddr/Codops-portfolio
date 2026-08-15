@@ -38,7 +38,15 @@ const creatd_li = document.createElement("li")
 
 creatd_li.textContent = "shiro"
 creatd_li.classList.add("item")
-console.log(creatd_li)
+// console.log(creatd_li)
 
 list.append(creatd_li)
 list.prepend(creatd_li)
+
+
+const li = document.querySelector(".item");
+// remove this element from the page
+li.remove();
+// clear an entire list
+const list = document.querySelector("#list");
+list.innerHTML = "";
