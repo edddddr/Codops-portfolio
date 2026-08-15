@@ -33,3 +33,12 @@ h1.classList.toggle("done")
 
 h1.style.color = "orange"
 console.log(h1.textContent)
+
+const creatd_li = document.createElement("li")
+
+creatd_li.textContent = "shiro"
+creatd_li.classList.add("item")
+console.log(creatd_li)
+
+list.append(creatd_li)
+list.prepend(creatd_li)
