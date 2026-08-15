@@ -82,3 +82,18 @@ btn.addEventListener('click', (e) => {
     console.log(e.key)
     // console.log("clicked")
 })
+
+
+const form = document.querySelector("#add-form");
+const nameIn = document.querySelector("#name");
+form.addEventListener("submit", (e) => {
+    e.preventDefault(); // stop page reload
+
+    const name = nameIn.value.trim();
+
+    if (!name) return; // basic validation
+    cart.push({ name, qty: 1 });
+    render();
+    form.reset(); // clear the field
+});
+
