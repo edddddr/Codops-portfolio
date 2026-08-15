@@ -17,4 +17,11 @@ const qty = document.querySelector("#qty");
 
 
 // console.log(li.getAttribute("Class"))
-console.log(li.dataset.id)
+// console.log(li.dataset.id)
+
+console.log(items)
+items.forEach(item => console.log(item))
+const name = [...items].map(item => item.textContent)
+
+
+console.log(name)
