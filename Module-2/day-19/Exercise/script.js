@@ -65,3 +65,20 @@ const render = () => {
 }
 
 render();
+
+
+
+const btn = document.getElementById("btn")
+
+
+const handleClick = () => {
+    cart.push({name: "Kitfo", qty: "3 kilo"})
+    render();
+}
+
+
+btn.addEventListener('click', (e) => {
+    handleClick()
+    console.log(e.key)
+    // console.log("clicked")
+})
