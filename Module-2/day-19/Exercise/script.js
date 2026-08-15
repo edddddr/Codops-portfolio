@@ -44,9 +44,24 @@ list.append(creatd_li)
 list.prepend(creatd_li)
 
 
-const li = document.querySelector(".item");
+// const li = document.querySelector(".item");
 // remove this element from the page
-li.remove();
-// clear an entire list
-const list = document.querySelector("#list");
-list.innerHTML = "";
+// li.remove();
+// list.innerHTML = "";
+
+const cart = [
+    { name: "Teff", qty: 2 },
+    { name: "Berbere", qty: 1 },
+];
+
+const render = () => {
+    const list = document.getElementById("list");
+
+    cart.forEach(item => {
+        const li = document.createElement("li");
+        li.textContent = `${item.name}, price : ${item.qty}`;
+        list.append(li);
+    })
+}
+
+render();
