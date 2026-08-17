@@ -11,6 +11,10 @@ const state = {
 const statusEl = document.querySelector("#status");
 const selectEl = document.querySelector("#currency");
 const formEl = document.querySelector("#convert-form");
+const amountEl = document.querySelector("#amount");
+const addBtn = document.querySelector("#watch");
+
+
 
 
 
@@ -78,4 +82,16 @@ formEl.addEventListener("submit", (e) => {
     const converted = (amt * rate).toFixed(2);
     resultEl.className = "text-xl font-semibold text-gray-800";
     resultEl.textContent = `${amt.toLocaleString()} ETB = ${converted} ${state.currency}`;
+});
+
+
+
+// Add to Watchlist
+addBtn.addEventListener("click", () => {
+    const code = selectEl.value;
+    if (!code || state.watchlist.includes(code)) return;
+
+    state.watchlist.push(code);
+    save();
+    renderWatchlist();
 });
