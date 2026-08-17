@@ -10,6 +10,8 @@ const state = {
 
 const statusEl = document.querySelector("#status");
 const selectEl = document.querySelector("#currency");
+const formEl = document.querySelector("#convert-form");
+
 
 
 // --- Fetch Rates ---
@@ -53,3 +55,27 @@ function render() {
 }
 
 
+
+formEl.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const amt = Number(amountEl.value);
+
+    if (!amt || amt <= 0) {
+        resultEl.textContent = "Please enter a valid positive amount.";
+        resultEl.className = "text-sm text-red-500 font-medium";
+        return;
+    }
+
+    state.currency = selectEl.value;
+    save();
+
+    const rate = state.rates[state.currency];
+    if (!rate) {
+        resultEl.textContent = "Rate unavailable.";
+        return;
+    }
+
+    const converted = (amt * rate).toFixed(2);
+    resultEl.className = "text-xl font-semibold text-gray-800";
+    resultEl.textContent = `${amt.toLocaleString()} ETB = ${converted} ${state.currency}`;
+});
