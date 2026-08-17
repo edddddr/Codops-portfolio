@@ -13,6 +13,7 @@ const selectEl = document.querySelector("#currency");
 const formEl = document.querySelector("#convert-form");
 const amountEl = document.querySelector("#amount");
 const addBtn = document.querySelector("#watch");
+const watchUl = document.querySelector("#watchlist");
 
 
 
@@ -95,3 +96,22 @@ addBtn.addEventListener("click", () => {
     save();
     renderWatchlist();
 });
+
+function renderWatchlist() {
+    if (state.watchlist.length === 0) {
+        watchUl.innerHTML = `<li class="text-gray-400 italic text-sm py-2">No saved currencies.</li>`;
+        return;
+    }
+
+    watchUl.innerHTML = state.watchlist.map(code => {
+        const rate = state.rates[code] ?? "N/A";
+        return `
+            <li data-c="${code}" class="flex justify-between items-center py-2 px-3 bg-gray-50 rounded hover:bg-gray-100 transition-colors">
+                <span class="text-sm font-medium text-gray-700">1 ETB = <strong class="text-blue-600">${rate}</strong> ${code}</span>
+                <button class="rm bg-red-100 hover:bg-red-200 text-red-600 text-xs font-bold py-1 px-2 rounded transition-colors cursor-pointer" title="Remove">
+                    ×
+                </button>
+            </li>
+        `;
+    }).join("");
+}
