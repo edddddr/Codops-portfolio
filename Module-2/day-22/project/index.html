@@ -20,7 +20,42 @@
             <!-- Status Indicator -->
             <p id="status" class="text-center text-sm font-medium mb-4 text-gray-500"></p>
 
-            
+            <!-- Conversion Form -->
+            <form id="convert-form" class="space-y-4">
+                <div class="flex items-center gap-2">
+                    <div class="flex grow items-center rounded-md border border-gray-300 bg-white px-3 py-1.5 focus-within:ring-2 focus-within:ring-blue-500">
+                        <span class="text-gray-500 mr-2">ETB</span>
+                        <input id="amount" type="number" step="any" placeholder="0.00" class="w-full focus:outline-none text-gray-900" required />
+                        
+                        <select id="currency" aria-label="Currency" class="bg-transparent text-gray-700 font-medium focus:outline-none cursor-pointer border-l pl-2 border-gray-300">
+                            <!-- Populated dynamically -->
+                        </select>
+                    </div>
+
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors cursor-pointer">
+                        Convert
+                    </button>
+                    
+                    <button id="watch" type="button" class="bg-gray-800 hover:bg-gray-900 text-white font-medium py-2 px-3 rounded-lg transition-colors cursor-pointer" title="Add to Watchlist">
+                        + Watch
+                    </button>
+                </div>
+            </form>
+
+            <!-- Conversion Result -->
+            <div class="mt-6 text-center">
+                <p id="result" class="text-xl font-semibold text-gray-800">0.00</p>
+            </div>
+
+            <hr class="my-6 border-gray-200" />
+
+            <!-- Watchlist Section -->
+            <div>
+                <h3 class="text-lg font-bold text-gray-700 mb-3">Watchlist</h3>
+                <ul id="watchlist" class="divide-y divide-gray-100 space-y-1">
+                    <!-- Populated dynamically -->
+                </ul>
+            </div>
         </div>
     </main>
 
