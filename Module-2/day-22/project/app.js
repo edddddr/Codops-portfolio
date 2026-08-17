@@ -17,6 +17,28 @@ const watchUl = document.querySelector("#watchlist");
 
 
 
+// --- LocalStorage Persistence ---
+function save() {
+    localStorage.setItem("birr_watch_state", JSON.stringify({
+        currency: state.currency,
+        watchlist: state.watchlist
+    }));
+}
+
+function load() {
+    const saved = localStorage.getItem("birr_watch_state");
+    if (saved) {
+        try {
+            const parsed = JSON.parse(saved);
+            if (parsed.currency) state.currency = parsed.currency;
+            if (Array.isArray(parsed.watchlist)) state.watchlist = parsed.watchlist;
+        } catch (err) {
+            console.error("Failed to parse localStorage state:", err);
+        }
+    }
+}
+
+
 
 
 // --- Fetch Rates ---
@@ -115,3 +137,15 @@ function renderWatchlist() {
         `;
     }).join("");
 }
+
+
+// Currency Select Change
+selectEl.addEventListener("change", (e) => {
+    state.currency = e.target.value;
+    save();
+});
+
+
+// --- Startup ---
+load();
+loadRates();
