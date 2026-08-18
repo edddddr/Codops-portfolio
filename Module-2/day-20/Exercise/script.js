@@ -79,7 +79,7 @@ async function loadMenu() {
 
 
 async function getDishes() {
-    
+
     const res = await fetch("/api/dishes");
     // fetch does NOT reject on 404 / 500
 
@@ -91,3 +91,26 @@ async function getDishes() {
     return dishes;
 
 }
+
+
+
+
+const list = document.querySelector("#dishes");
+    async function load() {
+    list.innerHTML = "Loading...";
+
+    try {
+        const dishes = await getDishes();
+        list.innerHTML = "";
+
+        dishes.forEach(d => {
+            const li = document.createElement("li");
+            li.textContent = `${d.name} — ${d.price} ETB`;
+            list.append(li);
+        });
+    } catch (err) {
+        list.innerHTML = "Could not load dishes.";
+    }
+}
+
+load();
