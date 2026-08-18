@@ -76,3 +76,18 @@ async function loadMenu() {
         hideSpinner();
     }
 }
+
+
+async function getDishes() {
+    
+    const res = await fetch("/api/dishes");
+    // fetch does NOT reject on 404 / 500
+
+    if (!res.ok) {
+        throw new Error("HTTP " + res.status);
+    }
+
+    const dishes = await res.json(); // parse
+    return dishes;
+
+}
