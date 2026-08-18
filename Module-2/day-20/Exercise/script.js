@@ -45,3 +45,22 @@ getUser(1)
 .then(first => console.log(first.total))
 .catch(err => console.log("failed:", err));
 // one catch handles errors from ANY step
+
+
+
+// fire several requests at once
+Promise.all([
+    fetch("/api/menu"),
+    fetch("/api/specials"),
+    fetch("/api/hours"),
+]).then(([menu, specials, hours]) => {
+// all three are ready here
+});
+
+
+async function showOrder(id) {
+// ...then await pauses for the promise
+    const order = await getOrder(id);
+    console.log(order.total);
+    return order;
+}
