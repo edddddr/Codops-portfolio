@@ -64,3 +64,15 @@ async function showOrder(id) {
     console.log(order.total);
     return order;
 }
+
+async function loadMenu() {
+    try {
+        const res = await fetch("/api/menu");
+        const data = await res.json();
+        render(data);
+    } catch (err) {
+        showError("Could not load the menu");
+    } finally {
+        hideSpinner();
+    }
+}
