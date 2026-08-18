@@ -36,3 +36,12 @@ console.log(err.message); // on failure
 .finally(() => {
 hideSpinner(); // always runs
 });
+
+
+// each then can RETURN a new promise
+getUser(1)
+.then(user => getOrders(user.id))
+.then(orders => orders[0])
+.then(first => console.log(first.total))
+.catch(err => console.log("failed:", err));
+// one catch handles errors from ANY step
