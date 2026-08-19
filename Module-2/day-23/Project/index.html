@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Addis Eats</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brandYellow: '#FFC72C',
+            brandRed: '#DA291C',
+            brandDark: '#1E1E1E'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans flex flex-col min-h-screen">
+
+  <!-- Header & Navigation -->
+  <header class="bg-brandRed text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-3xl" role="img" aria-label="Ethiopian Flag Plate">🍲</span>
+        <h1 class="text-2xl font-extrabold tracking-wide text-brandYellow">ADDIS EATS</h1>
+      </div>
+      <button id="cart-toggle-btn" class="relative bg-brandYellow text-brandDark font-bold px-4 py-2 rounded-lg shadow hover:bg-yellow-400 transition flex items-center gap-2" aria-label="Open shopping cart">
+        <span>🛒 Cart</span>
+        <span id="cart-badge" class="bg-brandRed text-white text-xs font-black px-2 py-0.5 rounded-full">0</span>
+      </button>
+    </div>
+  </header>
+
+
+  <footer class="bg-brandDark text-gray-400 py-6 text-center text-sm mt-auto">
+    <p>© 2026 Addis Eats. Quality Ethiopian cuisine delivered fast.</p>
+  </footer>
+
+  <!-- Application Logic -->
+  <script src="./script.js">
+  </script>
+</body>
+</html>
