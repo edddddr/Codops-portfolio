@@ -121,11 +121,46 @@
           </form>
         </div>
       </div>
+
+      
+      <div id="tracker-container" class="hidden space-y-4">
+        <div class="flex justify-between items-center border-b pb-3">
+          <h2 class="text-lg font-bold text-gray-900 border-l-4 border-green-500 pl-3">Order Status</h2>
+          <span class="text-xs bg-green-100 text-green-800 font-bold px-2 py-1 rounded-full animate-pulse">Live Tracker</span>
+        </div>
+
+        <div class="text-sm text-gray-600 space-y-1">
+          <p><strong>Order ID:</strong> <span id="track-order-id" class="font-mono">#AE-0000</span></p>
+          <p><strong>Destination:</strong> <span id="track-address">...</span></p>
+          <p><strong>Total Paid:</strong> <span id="track-total" class="font-semibold text-brandRed">...</span></p>
+        </div>
+
+        <!-- Progress Steps -->
+        <div class="space-y-3 pt-2">
+          <div id="step-1" class="flex items-center gap-3 text-sm text-gray-400">
+            <div class="step-circle w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center font-bold text-xs text-white">1</div>
+            <span>Order Placed & Confirmed</span>
+          </div>
+          <div id="step-2" class="flex items-center gap-3 text-sm text-gray-400">
+            <div class="step-circle w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center font-bold text-xs text-white">2</div>
+            <span>Preparing Kitchen Fresh</span>
+          </div>
+          <div id="step-3" class="flex items-center gap-3 text-sm text-gray-400">
+            <div class="step-circle w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center font-bold text-xs text-white">3</div>
+            <span>Driver Picked Up (Abebe 🛵)</span>
+          </div>
+          <div id="step-4" class="flex items-center gap-3 text-sm text-gray-400">
+            <div class="step-circle w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center font-bold text-xs text-white">4</div>
+            <span>Delivered & Enjoy! 🍽️</span>
+          </div>
+        </div>
+
+        <button id="reset-order-btn" class="w-full mt-4 bg-gray-800 text-white font-bold py-2 rounded-lg hover:bg-gray-900 transition text-sm">
+          Place Another Order
+        </button>
+      </div>
+
     </aside>
-
-
-
-
 
   </main>
 
