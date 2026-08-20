@@ -117,6 +117,49 @@ function renderMenu() {
     .join("");
 }
 
+function renderCart() {
+  if (cart.length === 0) {
+    cartItemsContainer.innerHTML = "";
+    cartEmptyMsg.classList.remove("hidden");
+    checkoutForm.classList.add("hidden");
+    subtotalEl.textContent = "0.00 ETB";
+    deliveryEl.textContent = "0.00 ETB";
+    totalEl.textContent = "0.00 ETB";
+    cartBadge.textContent = "0";
+    return;
+  }
+
+  cartEmptyMsg.classList.add("hidden");
+  checkoutForm.classList.remove("hidden");
+
+  cartItemsContainer.innerHTML = cart
+    .map(
+      (item) => `
+    <div class="py-3 flex items-center justify-between">
+      <div class="pr-2">
+        <p class="font-semibold text-sm text-gray-800">${item.name}</p>
+        <p class="text-xs text-gray-500">${item.price} ETB each</p>
+      </div>
+      <div class="flex items-center gap-2">
+        <button  class="w-6 h-6 bg-gray-200 rounded text-gray-700 font-bold hover:bg-gray-300">-</button>
+        <span class="text-sm font-bold w-4 text-center">${item.qty}</span>
+        <button  class="w-6 h-6 bg-gray-200 rounded text-gray-700 font-bold hover:bg-gray-300">+</button>
+      </div>
+    </div>
+  `,
+    )
+    .join("");
+
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+  const grandTotal = subtotal + DELIVERY_FEE;
+
+  subtotalEl.textContent = `${subtotal.toFixed(2)} ETB`;
+  deliveryEl.textContent = `${DELIVERY_FEE.toFixed(2)} ETB`;
+  totalEl.textContent = `${grandTotal.toFixed(2)} ETB`;
+  cartBadge.textContent = totalCount;
+}
+
 window.addToCart = function (id) {
   const existing = cart.find((item) => item.id === id);
   if (existing) {
@@ -128,4 +171,5 @@ window.addToCart = function (id) {
   saveAndRender();
 };
 
+renderMenu();
 renderCart();
