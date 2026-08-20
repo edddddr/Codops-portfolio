@@ -141,9 +141,9 @@ function renderCart() {
         <p class="text-xs text-gray-500">${item.price} ETB each</p>
       </div>
       <div class="flex items-center gap-2">
-        <button  class="w-6 h-6 bg-gray-200 rounded text-gray-700 font-bold hover:bg-gray-300">-</button>
+        <button onclick="updateQty('${item.id}', -1)" class="w-6 h-6 bg-gray-200 rounded text-gray-700 font-bold hover:bg-gray-300">-</button>
         <span class="text-sm font-bold w-4 text-center">${item.qty}</span>
-        <button  class="w-6 h-6 bg-gray-200 rounded text-gray-700 font-bold hover:bg-gray-300">+</button>
+        <button onclick="updateQty('${item.id}', 1)" class="w-6 h-6 bg-gray-200 rounded text-gray-700 font-bold hover:bg-gray-300">+</button>
       </div>
     </div>
   `,
@@ -168,7 +168,16 @@ window.addToCart = function (id) {
     const menuItem = MENU.find((m) => m.id === id);
     cart.push({ ...menuItem, qty: 1 });
   }
-  saveAndRender();
+};
+
+window.updateQty = function (id, delta) {
+  const index = cart.findIndex((item) => item.id === id);
+  if (index !== -1) {
+    cart[index].qty += delta;
+    if (cart[index].qty <= 0) {
+      cart.splice(index, 1);
+    }
+  }
 };
 
 renderMenu();
