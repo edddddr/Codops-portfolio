@@ -13,7 +13,7 @@ const MENU = [
     category: "Fasting",
     price: 280,
     desc: "Assorted lentils, chickpeas, and vegetable stews served on Injera.",
-    img: "🫓",
+    img: "🥗",
   },
   {
     id: "3",
@@ -122,6 +122,7 @@ function renderCart() {
     cartItemsContainer.innerHTML = "";
     cartEmptyMsg.classList.remove("hidden");
     checkoutForm.classList.add("hidden");
+    resetOrderBtn.classList.add("hidden");
     subtotalEl.textContent = "0.00 ETB";
     deliveryEl.textContent = "0.00 ETB";
     totalEl.textContent = "0.00 ETB";
@@ -131,6 +132,7 @@ function renderCart() {
 
   cartEmptyMsg.classList.add("hidden");
   checkoutForm.classList.remove("hidden");
+  resetOrderBtn.classList.remove("hidden");
 
   cartItemsContainer.innerHTML = cart
     .map(
@@ -168,6 +170,7 @@ window.addToCart = function (id) {
     const menuItem = MENU.find((m) => m.id === id);
     cart.push({ ...menuItem, qty: 1 });
   }
+  saveAndRender();
 };
 
 window.updateQty = function (id, delta) {
@@ -178,6 +181,38 @@ window.updateQty = function (id, delta) {
       cart.splice(index, 1);
     }
   }
+  saveAndRender();
+};
+
+function saveAndRender() {
+  localStorage.setItem("addis_eats_cart", JSON.stringify(cart));
+  renderCart();
+}
+
+searchInput.addEventListener("input", renderMenu);
+categoryFilter.addEventListener("change", renderMenu);
+
+checkoutForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const phoneValid = /^(09|07)[0-9]{8}$/.test(phoneInput.value.trim());
+
+  if (!phoneValid) {
+    phoneError.classList.remove("hidden");
+    return;
+  }
+
+  phoneError.classList.add("hidden");
+  const finalTotal = totalEl.textContent;
+  const finalAddress = addressInput.value.trim();
+
+  cart = [];
+  saveAndRender();
+  checkoutForm.reset();
+});
+
+resetOrderBtn.onclick = function () {
+  cart = [];
+  saveAndRender();
 };
 
 renderMenu();
