@@ -108,7 +108,7 @@ function renderMenu() {
         </div>
         <p class="text-gray-500 text-sm mt-1 mb-4">${item.desc}</p>
       </div>
-      <button class="w-full bg-brandYellow text-brandDark font-bold py-2 rounded-lg hover:bg-yellow-400 transition text-sm">
+      <button onclick="addToCart('${item.id}')" class="w-full bg-brandYellow text-brandDark font-bold py-2 rounded-lg hover:bg-yellow-400 transition text-sm">
         + Add to Order
       </button>
     </article>
@@ -116,5 +116,16 @@ function renderMenu() {
     )
     .join("");
 }
+
+window.addToCart = function (id) {
+  const existing = cart.find((item) => item.id === id);
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    const menuItem = MENU.find((m) => m.id === id);
+    cart.push({ ...menuItem, qty: 1 });
+  }
+  saveAndRender();
+};
 
 renderCart();
