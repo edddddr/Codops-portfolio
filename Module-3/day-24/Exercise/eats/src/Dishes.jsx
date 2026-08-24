@@ -1,8 +1,8 @@
-function Dish(props) {
+function Dish({ name, price }) {
   return (
     <div className="dish">
-      <h3>{props.name}</h3>
-      <p>{props.price} ETB</p>
+      <h3>{name}</h3>
+      <p>{price} ETB</p>
     </div>
   );
 }
