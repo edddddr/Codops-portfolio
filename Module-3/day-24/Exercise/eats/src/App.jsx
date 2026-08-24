@@ -1,12 +1,13 @@
 import "./App.css";
-import Dish from "./Dishes.jsx";
+import Header from "./Home.jsx";
+import Menu from "./Menu.jsx";
 
 function App() {
   return (
     <div>
-      <h1>Addis Eats</h1>
+      <Header />
       <p>Order great food across Addis.</p>
-      <Dish name="Shiro" price={120} />;
+      <Menu />
     </div>
   );
 }
