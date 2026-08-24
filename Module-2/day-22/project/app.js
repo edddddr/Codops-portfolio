@@ -1,21 +1,20 @@
 const API = "https://open.er-api.com/v6/latest/ETB";
 
-
+// Application State
 const state = {
     rates: {},
     currency: "USD",
     watchlist: []
 };
 
-
+// DOM Elements
 const statusEl = document.querySelector("#status");
 const selectEl = document.querySelector("#currency");
 const formEl = document.querySelector("#convert-form");
 const amountEl = document.querySelector("#amount");
+const resultEl = document.querySelector("#result");
 const addBtn = document.querySelector("#watch");
 const watchUl = document.querySelector("#watchlist");
-
-
 
 // --- LocalStorage Persistence ---
 function save() {
@@ -37,9 +36,6 @@ function load() {
         }
     }
 }
-
-
-
 
 // --- Fetch Rates ---
 async function loadRates() {
@@ -63,7 +59,7 @@ async function loadRates() {
     }
 }
 
-
+// --- Render Logic ---
 function render() {
     // Populate Currency Dropdown
     const codes = Object.keys(state.rates);
@@ -81,8 +77,34 @@ function render() {
     renderWatchlist();
 }
 
+function renderWatchlist() {
+    if (state.watchlist.length === 0) {
+        watchUl.innerHTML = `<li class="text-gray-400 italic text-sm py-2">No saved currencies.</li>`;
+        return;
+    }
 
+    watchUl.innerHTML = state.watchlist.map(code => {
+        const rate = state.rates[code] ?? "N/A";
+        return `
+            <li data-c="${code}" class="flex justify-between items-center py-2 px-3 bg-gray-50 rounded hover:bg-gray-100 transition-colors">
+                <span class="text-sm font-medium text-gray-700">1 ETB = <strong class="text-blue-600">${rate}</strong> ${code}</span>
+                <button class="rm bg-red-100 hover:bg-red-200 text-red-600 text-xs font-bold py-1 px-2 rounded transition-colors cursor-pointer" title="Remove">
+                    ×
+                </button>
+            </li>
+        `;
+    }).join("");
+}
 
+// --- Event Handlers ---
+
+// Currency Select Change
+selectEl.addEventListener("change", (e) => {
+    state.currency = e.target.value;
+    save();
+});
+
+// Conversion Logic
 formEl.addEventListener("submit", (e) => {
     e.preventDefault();
     const amt = Number(amountEl.value);
@@ -107,8 +129,6 @@ formEl.addEventListener("submit", (e) => {
     resultEl.textContent = `${amt.toLocaleString()} ETB = ${converted} ${state.currency}`;
 });
 
-
-
 // Add to Watchlist
 addBtn.addEventListener("click", () => {
     const code = selectEl.value;
@@ -119,32 +139,17 @@ addBtn.addEventListener("click", () => {
     renderWatchlist();
 });
 
-function renderWatchlist() {
-    if (state.watchlist.length === 0) {
-        watchUl.innerHTML = `<li class="text-gray-400 italic text-sm py-2">No saved currencies.</li>`;
-        return;
-    }
+// Remove from Watchlist (Event Delegation)
+watchUl.addEventListener("click", (e) => {
+    if (!e.target.matches(".rm")) return;
 
-    watchUl.innerHTML = state.watchlist.map(code => {
-        const rate = state.rates[code] ?? "N/A";
-        return `
-            <li data-c="${code}" class="flex justify-between items-center py-2 px-3 bg-gray-50 rounded hover:bg-gray-100 transition-colors">
-                <span class="text-sm font-medium text-gray-700">1 ETB = <strong class="text-blue-600">${rate}</strong> ${code}</span>
-                <button class="rm bg-red-100 hover:bg-red-200 text-red-600 text-xs font-bold py-1 px-2 rounded transition-colors cursor-pointer" title="Remove">
-                    ×
-                </button>
-            </li>
-        `;
-    }).join("");
-}
+    const li = e.target.closest("li");
+    const code = li.dataset.c;
 
-
-// Currency Select Change
-selectEl.addEventListener("change", (e) => {
-    state.currency = e.target.value;
+    state.watchlist = state.watchlist.filter(item => item !== code);
     save();
+    renderWatchlist();
 });
-
 
 // --- Startup ---
 load();

@@ -51,7 +51,6 @@ const MENU = [
 
 const DELIVERY_FEE = 100;
 let cart = JSON.parse(localStorage.getItem("addis_eats_cart")) || [];
-let trackerInterval = null;
 
 const dishGrid = document.getElementById("dish-grid");
 const emptyMenu = document.getElementById("empty-menu");
