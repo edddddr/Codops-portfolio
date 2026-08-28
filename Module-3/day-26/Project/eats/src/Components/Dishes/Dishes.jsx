@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import "./Dishes.css";
 
 function Dishes({ name, price }) {
@@ -8,6 +9,13 @@ function Dishes({ name, price }) {
     </div>
   );
 }
+
+Dish.propTypes = {
+  name: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
+  spicy: PropTypes.bool, // optional
+};
+
 // used with attributes:
 
 export default Dishes;
