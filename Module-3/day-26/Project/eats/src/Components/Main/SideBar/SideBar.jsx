@@ -11,7 +11,7 @@ function SideBar() {
   return (
     <section className="bg">
       {dishes.map((d) => (
-        <Dishes key={d.id} name={d.name} price={d.price} />
+        <Dishes key={d.id} name={d.name} price={d.price} spicy={d.veg} />
       ))}
     </section>
   );
