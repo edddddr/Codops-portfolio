@@ -2,12 +2,15 @@ import "./App.css";
 import Header from "./Components/Header/Header.jsx";
 import Main from "./Components/Main/Main.jsx";
 import Footer from "./Components/Footer/Footer.jsx";
+import State from "./State/State.jsx";
 
 function App() {
   return (
     <div>
       <Header />
+      <State />
       <Main />
+
       <Footer />
     </div>
   );
