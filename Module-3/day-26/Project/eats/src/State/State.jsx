@@ -2,8 +2,7 @@ import { useState } from "react";
 
 function State() {
   let [count, setCount] = useState(0);
-  let [name, setName] = useState("");
-  let [phone, setPhone] = useState("");
+  let [isValid, setIsValid] = useState(false);
 
   const handleCount = () => setCount(count + 1);
 
@@ -19,7 +18,12 @@ function State() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(form.name, form.phone);
+    setIsValid(true);
+    setTimeout(() => {
+      console.log(form.name, form.phone);
+      setIsValid(false);
+    }, 3000);
+    setForm({ name: "", phone: "" });
   };
 
   return (
@@ -34,7 +38,9 @@ function State() {
         <label>Phone: </label>
         <input name="phone" value={form.phone} onChange={handleChange} />
         <br />
-        <button type="submit">Submit</button>
+        <button disabled={isValid} type="submit">
+          Submit
+        </button>
       </form>
     </>
   );

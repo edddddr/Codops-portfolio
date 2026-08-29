@@ -3,9 +3,9 @@ import Menu from "./Menu/Menu.jsx";
 import "./Main.css";
 
 const dishes = [
-  { id: 1, name: "Tibs", price: 200, category: "habeshan", veg: false },
-  { id: 2, name: "Shiro", price: 120, category: "habeshan", veg: true },
-  { id: 3, name: "Bergur", price: 110, category: "foreign", veg: true },
+  { id: 1, name: "Tibs", price: 200, category: "Main", veg: false },
+  { id: 2, name: "Shiro", price: 120, category: "Vegan", veg: true },
+  { id: 3, name: "Bergur", price: 110, category: "Grill", veg: true },
 ];
 
 function Main() {
