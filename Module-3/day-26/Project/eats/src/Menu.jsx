@@ -1,4 +1,4 @@
-import Dish from "./Dishes.jsx";
+import Dish from "./Components/Dishes/Dishes.jsx";
 
 const menu = [
   { id: 1, name: "Doro Wat", price: 240 },
@@ -7,12 +7,22 @@ const menu = [
 ];
 
 function Menu() {
+  const [total, setTotal] = useState(0);
+  function addToOrder(price) {
+    setTotal(total + price);
+  }
+
   return (
-    <div>
+    <>
       {menu.map((d) => (
-        <Dish key={d.id} name={d.name} price={d.price} />
+        <>
+          <Dish key={d.id} name={d.name} price={d.price} />
+          <button key={d.id} onClick={() => addToOrder(d.price)}>
+            {d.name} — {d.price} ETB
+          </button>
+        </>
       ))}
-    </div>
+    </>
   );
 }
 
