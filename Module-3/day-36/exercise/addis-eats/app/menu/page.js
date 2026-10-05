@@ -1,8 +1,9 @@
+import { Suspense } from "react";
 import Dishlist from "./Dishlist";
 
-import { Suspense } from "react";
+export const revalidate = 3600;
 
-export default function MenuPage() {
+export default async function MenuPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-orange-500">Our Menu</h1>
@@ -19,5 +20,3 @@ export default function MenuPage() {
     </div>
   );
 }
-
-// Separate component to handle the async data fetch

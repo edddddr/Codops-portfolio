@@ -1,12 +1,11 @@
-import Sidebar from "./SideBar";
+import CategoryBar from "./CategoryBar";
 
-export default function layout({ children }) {
+export default function MenuLayout({ children }) {
   return (
-    <div className="flex min-h-screen ">
-      {/* Persistent Sidebar Component */}
-      <Sidebar />
+    <div className="flex min-h-screen">
+      {/* 2. Render persistently across dynamic dish sub-navigation targets */}
+      <CategoryBar />
 
-      {/* Dynamic Content Area (Swaps on navigation) */}
       <main className="flex-1 p-6">{children}</main>
     </div>
   );
