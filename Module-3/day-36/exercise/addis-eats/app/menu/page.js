@@ -1,63 +1,57 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import Link from "next/link";
-import CategoryBar from "./_components/CategoryBar";
-import DishList from "./_components/DishList";
 
-export default function MenuPage() {
-  const [dishes, setDishes] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+// Set route revalidation (ISR) to 60 seconds
+export const revalidate = 60;
 
-  useEffect(() => {
-    async function fetchMenu() {
-      try {
-        setLoading(true);
-        const res = await fetch("https://addis-eats-backend.onrender.com/menu");
+export default async function MenuPage() {
+  const res = await fetch("https://addis-eats-backend.onrender.com/menu");
 
-        if (!res.ok) {
-          throw new Error("Failed to fetch menu items");
-        }
+  if (!res.ok) {
+    throw new Error("Failed to fetch menu items");
+  }
 
-        const data = await res.json();
-        setDishes(data.data);
-        console.log(data.data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchMenu();
-  }, []);
-
-  if (loading) return <p style={{ padding: "20px" }}>Loading menu items...</p>;
-  if (error)
-    return <p style={{ padding: "20px", color: "red" }}>Error: {error}</p>;
-
-  // Filter dishes based on the selected category key
-  const filteredDishes =
-    selectedCategory === "all"
-      ? dishes
-      : dishes.filter(
-          (dish) =>
-            dish.category?.toLowerCase() === selectedCategory.toLowerCase(),
-        );
+  const dishes = await res.json();
 
   return (
-    <main style={{ padding: "20px" }}>
-      <nav style={{ marginBottom: "20px" }}>
-        <Link href="/">← Home</Link> | <Link href="/cart">Cart</Link>
-      </nav>
+    <div>
       <h1>Addis Eats Menu</h1>
-      <CategoryBar
-        activeCategory={selectedCategory}
-        onSelectCategory={setSelectedCategory}
-      />
-      <DishList dishes={filteredDishes} />
-    </main>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+          gap: "1.5rem",
+          marginTop: "1.5rem",
+        }}
+      >
+        {dishes.data.map((dish) => (
+          <div
+            key={dish._id || dish.id}
+            style={{
+              border: "1px solid #ddd",
+              padding: "1rem",
+              borderRadius: "8px",
+            }}
+          >
+            <h3>{dish.nameEn}</h3>
+            <p style={{ color: "#666", fontSize: "14px", margin: "0.5rem 0" }}>
+              {dish.description}
+            </p>
+            <p>
+              <strong>${dish.priceETB}</strong>
+            </p>
+            <Link
+              href={`/menu/${dish._id || dish.id}`}
+              style={{
+                display: "inline-block",
+                marginTop: "0.5rem",
+                color: "#0070f3",
+              }}
+            >
+              View Dish →
+            </Link>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
