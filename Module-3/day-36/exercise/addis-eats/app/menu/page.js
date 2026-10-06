@@ -1,57 +1,54 @@
-import Link from "next/link";
+import DishList from "./_components/DishList";
+import CategoryBar from "./_components/CategoryBar";
 
-// Set route revalidation (ISR) to 60 seconds
 export const revalidate = 60;
 
-export default async function MenuPage() {
+const categories = [
+  { id: "all", name: "All Dishes", apiCategory: "all" },
+  {
+    id: "traditional",
+    name: "Traditional Stews & Wat",
+    apiCategory: "Traditional Stews & Wat",
+  },
+  { id: "tibs", name: "Tibs & Grills", apiCategory: "Tibs & Grills" },
+  {
+    id: "fasting",
+    name: "Fasting & Vegan / Tsom",
+    apiCategory: "Fasting & Vegan / Tsom",
+  },
+  {
+    id: "raw",
+    name: "Raw & Cured Delicacies / Kitfo",
+    apiCategory: "Raw & Cured Delicacies / Kitfo",
+  },
+  { id: "beverages", name: "Beverages & Tej", apiCategory: "Beverages & Tej" },
+];
+
+export default async function MenuPage({ searchParams }) {
+  const { category = "all" } = await searchParams;
+
   const res = await fetch("https://addis-eats-backend.onrender.com/menu");
+  if (!res.ok) throw new Error("Failed to fetch menu items");
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch menu items");
-  }
+  const data = await res.json();
+  const dishes = data.data;
 
-  const dishes = await res.json();
+  const matchedCategory = categories.find((c) => c.id === category);
+
+  const targetApiCategory = matchedCategory
+    ? matchedCategory.apiCategory
+    : "all";
+
+  const filteredDishes =
+    targetApiCategory === "all"
+      ? dishes
+      : dishes.filter((dish) => dish.category === targetApiCategory);
 
   return (
     <div>
       <h1>Addis Eats Menu</h1>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-          gap: "1.5rem",
-          marginTop: "1.5rem",
-        }}
-      >
-        {dishes.data.map((dish) => (
-          <div
-            key={dish._id || dish.id}
-            style={{
-              border: "1px solid #ddd",
-              padding: "1rem",
-              borderRadius: "8px",
-            }}
-          >
-            <h3>{dish.nameEn}</h3>
-            <p style={{ color: "#666", fontSize: "14px", margin: "0.5rem 0" }}>
-              {dish.description}
-            </p>
-            <p>
-              <strong>${dish.priceETB}</strong>
-            </p>
-            <Link
-              href={`/menu/${dish._id || dish.id}`}
-              style={{
-                display: "inline-block",
-                marginTop: "0.5rem",
-                color: "#0070f3",
-              }}
-            >
-              View Dish →
-            </Link>
-          </div>
-        ))}
-      </div>
+      <CategoryBar activeCategory={category} />
+      <DishList dishes={filteredDishes} />
     </div>
   );
 }

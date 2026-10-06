@@ -2,40 +2,42 @@ import Link from "next/link";
 
 export default function DishList({ dishes }) {
   if (!dishes || dishes.length === 0) {
-    return <p>No dishes found for this category.</p>;
+    return <p>No dishes found.</p>;
   }
 
   return (
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))",
-        gap: "20px",
+        gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+        gap: "1.5rem",
       }}
     >
       {dishes.map((dish) => (
         <div
-          key={dish._id || dish.id}
+          key={dish.id}
           style={{
             border: "1px solid #ddd",
-            padding: "15px",
+            padding: "1rem",
             borderRadius: "8px",
           }}
         >
-          <h3>{dish.name}</h3>
-          <p style={{ color: "#666", fontSize: "14px" }}>{dish.description}</p>
+          <h3>{dish.nameEn}</h3>
+          <p style={{ color: "#666", fontSize: "14px", margin: "0.5rem 0" }}>
+            {dish.description}
+          </p>
           <p>
-            <strong>Price:</strong> ${dish.price}
+            <strong>${dish.priceETB}</strong>
           </p>
           <Link
-            href={`/menu/${dish._id || dish.id}`}
+            href={`/menu/${dish.id}`}
             style={{
               display: "inline-block",
-              marginTop: "10px",
+              marginTop: "0.5rem",
               color: "#0070f3",
             }}
           >
-            View Details →
+            View Dish →
           </Link>
         </div>
       ))}

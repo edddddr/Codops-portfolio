@@ -1,16 +1,40 @@
-const categories = [
-  { id: "all", name: "All Dishes" },
-  { id: "Traditional Stews & Wat", name: "Traditional Stews & Wat" },
-  { id: "Tibs & Grills", name: "Tibs & Grills" },
-  { id: "Fasting & Vegan / Tsom", name: "Fasting & Vegan / Tsom" },
+"use client";
+
+import { useRouter } from "next/navigation";
+
+export const categories = [
+  { id: "all", name: "All Dishes", apiCategory: "all" },
   {
-    id: "Raw & Cured Delicacies / Kitfo",
-    name: "Raw & Cured Delicacies / Kitfo",
+    id: "traditional",
+    name: "Traditional Stews & Wat",
+    apiCategory: "Traditional Stews & Wat",
   },
-  { id: "Beverages & Tej", name: "Beverages & Tej" },
+  { id: "tibs", name: "Tibs & Grills", apiCategory: "Tibs & Grills" },
+  {
+    id: "fasting",
+    name: "Fasting & Vegan / Tsom",
+    apiCategory: "Fasting & Vegan / Tsom",
+  },
+  {
+    id: "raw",
+    name: "Raw & Cured Delicacies / Kitfo",
+    apiCategory: "Raw & Cured Delicacies / Kitfo",
+  },
+  { id: "beverages", name: "Beverages & Tej", apiCategory: "Beverages & Tej" },
 ];
 
-export default function CategoryBar({ activeCategory, onSelectCategory }) {
+export default function CategoryBar({ activeCategory }) {
+  const router = useRouter();
+
+  const handleSelect = (categoryId) => {
+    if (categoryId === "all") {
+      router.push("/menu");
+    } else {
+      // Pushes clean slug like /menu?category=traditional
+      router.push(`/menu?category=${categoryId}`);
+    }
+  };
+
   return (
     <div
       style={{
@@ -23,7 +47,7 @@ export default function CategoryBar({ activeCategory, onSelectCategory }) {
       {categories.map((cat) => (
         <button
           key={cat.id}
-          onClick={() => onSelectCategory(cat.id)}
+          onClick={() => handleSelect(cat.id)}
           style={{
             padding: "8px 16px",
             cursor: "pointer",
