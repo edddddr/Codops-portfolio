@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+
 export async function GET(request, { params }) {
   const { id } = await params;
 
@@ -8,6 +10,6 @@ export async function GET(request, { params }) {
   const dish = dishes.data.find((m) => m.id === id);
   console.log(dish);
 
-  if (!dish) return Response.json({ status: 404 });
-  return Response.json({ msg: "Holla", "req-pamrams": id, data: dish });
+  if (!dish) return NextResponse.json({ status: 404 });
+  return NextResponse.json({ msg: "Holla", "req-pamrams": id, data: dish });
 }
