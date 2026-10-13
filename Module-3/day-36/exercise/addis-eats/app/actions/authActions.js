@@ -24,17 +24,15 @@ export async function registerAction(prevState, formData) {
 
   const { name, email, password } = validation.data;
 
-  // Save mock user
   const newUser = { id: `USER-${Date.now()}`, name, email, password };
   usersDb.push(newUser);
 
-  // Set HTTP-only session cookie
   const cookieStore = await cookies();
   cookieStore.set("session_id", `SESS-${Date.now()}`, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    maxAge: 60 * 60 * 24 * 7, // 1 week
+    maxAge: 60 * 60 * 24 * 7,
   });
 
   cookieStore.set("user_name", name, { path: "/" });
@@ -67,12 +65,10 @@ export async function loginAction(prevState, formData) {
 
   const { email, password } = validation.data;
 
-  // Check mock user credentials
   const user = usersDb.find(
     (u) => u.email === email && u.password === password,
   );
 
-  // Allow test credentials if db is empty
   const isTestUser = email === "user@addiseats.com" && password === "123456";
 
   if (!user && !isTestUser) {
@@ -86,7 +82,6 @@ export async function loginAction(prevState, formData) {
   const userName = user ? user.name : "Demo User";
   const userId = user ? user.id : "USER-DEMO";
 
-  // Set session cookies
   const cookieStore = await cookies();
   cookieStore.set("session_id", `SESS-${Date.now()}`, {
     httpOnly: true,
@@ -105,9 +100,6 @@ export async function loginAction(prevState, formData) {
   };
 }
 
-/**
- * Sign Out Server Action
- */
 export async function logoutAction() {
   const cookieStore = await cookies();
   cookieStore.delete("session_id");
