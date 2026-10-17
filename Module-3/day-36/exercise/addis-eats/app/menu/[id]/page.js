@@ -1,6 +1,15 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+export async function generateMetadata({ params }) {
+  const dish = await getDish(params.id);
+  if (!dish) return { title: "Dish not found" };
+  return {
+    title: dish.name,
+    description: `${dish.name} — ${dish.price} ETB. ${dish.summary}`,
+  };
+}
+
 export async function generateStaticParams() {
   try {
     const res = await fetch("https://addis-eats-backend.onrender.com/menu");

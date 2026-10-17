@@ -6,6 +6,40 @@ import { registerSchema, loginSchema } from "@/app/lib/authSchema";
 
 const usersDb = [];
 
+async function createSessionCookies({ userId, name, role }) {
+  const cookieStore = await cookies();
+
+  cookieStore.set("session_id", `SESS-${Date.now()}`, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+  });
+
+  cookieStore.set("user_id", userId, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+  });
+
+  cookieStore.set("user_role", role, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+  });
+
+  cookieStore.set("user_name", name, {
+    httpOnly: false,
+    path: "/",
+    maxAge: 60 * 60 * 24 * 7,
+  });
+}
+
 export async function registerAction(prevState, formData) {
   const rawData = {
     name: formData.get("name"),
@@ -24,35 +58,31 @@ export async function registerAction(prevState, formData) {
 
   const { name, email, password } = validation.data;
 
-  const newUser = { id: `USER-${Date.now()}`, name, email, password };
+  const role = email.includes("staff") ? "staff" : "customer";
+  const newUser = { id: `USER-${Date.now()}`, name, email, password, role };
+
   usersDb.push(newUser);
 
-  const cookieStore = await cookies();
-  cookieStore.set("session_id", `SESS-${Date.now()}`, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 7,
+  await createSessionCookies({
+    userId: newUser.id,
+    name: newUser.name,
+    role: newUser.role,
   });
-
-  cookieStore.set("user_name", name, { path: "/" });
-  cookieStore.set("user_id", newUser.id, { path: "/" });
 
   return {
     success: true,
     message: "Registration successful!",
-    user: { name, email },
+    user: { name, email, role },
   };
 }
 
-/**
- * Login / Sign In Server Action
- */
-export async function loginAction(prevState, formData) {
+export async function signInAction(prevState, formData) {
   const rawData = {
     email: formData.get("email"),
     password: formData.get("password"),
   };
+
+  const redirectTo = formData.get("next") || "/";
 
   const validation = loginSchema.safeParse(rawData);
 
@@ -68,43 +98,48 @@ export async function loginAction(prevState, formData) {
   const user = usersDb.find(
     (u) => u.email === email && u.password === password,
   );
+  const isDemoCustomer =
+    email === "user@addiseats.com" && password === "123456";
+  const isDemoStaff = email === "staff@addiseats.com" && password === "123456";
 
-  const isTestUser = email === "user@addiseats.com" && password === "123456";
-
-  if (!user && !isTestUser) {
+  if (!user && !isDemoCustomer && !isDemoStaff) {
     return {
       success: false,
-      message: "Invalid email or password.",
+      error: "Invalid email or password.",
       fieldErrors: {},
     };
   }
 
-  const userName = user ? user.name : "Demo User";
-  const userId = user ? user.id : "USER-DEMO";
+  const userName = user
+    ? user.name
+    : isDemoStaff
+      ? "Staff Member"
+      : "Demo User";
+  const userId = user ? user.id : isDemoStaff ? "STAFF-DEMO" : "USER-DEMO";
+  const userRole = user ? user.role : isDemoStaff ? "staff" : "customer";
 
-  const cookieStore = await cookies();
-  cookieStore.set("session_id", `SESS-${Date.now()}`, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 7,
+  await createSessionCookies({
+    userId,
+    name: userName,
+    role: userRole,
   });
 
-  cookieStore.set("user_name", userName, { path: "/" });
-  cookieStore.set("user_id", userId, { path: "/" });
+  const isValidRedirect =
+    typeof redirectTo === "string" &&
+    redirectTo.startsWith("/") &&
+    !redirectTo.startsWith("//");
+  const safeDestination = isValidRedirect ? redirectTo : "/";
 
-  return {
-    success: true,
-    message: "Login successful!",
-    user: { name: userName, email },
-  };
+  redirect(safeDestination);
 }
 
 export async function logoutAction() {
   const cookieStore = await cookies();
-  cookieStore.delete("session_id");
-  cookieStore.delete("user_name");
-  cookieStore.delete("user_id");
 
-  redirect("/login");
+  cookieStore.delete("session_id");
+  cookieStore.delete("user_id");
+  cookieStore.delete("user_role");
+  cookieStore.delete("user_name");
+
+  redirect("/signin");
 }

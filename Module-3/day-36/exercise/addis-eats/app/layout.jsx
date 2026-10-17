@@ -5,8 +5,18 @@ import { Providers } from "./providers";
 import { logoutAction } from "@/app/actions/authActions";
 
 export const metadata = {
-  title: "Addis Eats",
-  description: "Authentic Ethiopian Cuisine",
+  title: {
+    template: "%s · Addis Eats",
+    default: "Addis Eats — food delivery in Addis Ababa",
+  },
+  metadataBase: new URL("https://addiseats.et"),
+  openGraph: {
+    title: "Kitfo · Addis Eats",
+    description: "Minced beef, mitmita, 320 ETB.",
+    images: ["/og/kitfo.jpg"],
+    type: "website",
+    locale: "en_ET",
+  },
 };
 
 export default async function RootLayout({ children }) {

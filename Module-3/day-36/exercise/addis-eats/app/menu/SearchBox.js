@@ -22,12 +22,10 @@ export default function SearchBox({ activeCategory = "all" }) {
     return () => clearTimeout(timer);
   }, [searchTerm]);
 
-  // Reset page when active category changes
   useEffect(() => {
     setPage(1);
   }, [activeCategory]);
 
-  // Fetch full menu list using SWR
   const { data, error, isLoading } = useSWR(
     "https://addis-eats-backend.onrender.com/menu",
     fetcher,
@@ -40,19 +38,16 @@ export default function SearchBox({ activeCategory = "all" }) {
       ? data
       : [];
 
-  // Map active URL category to target API string
   const matchedCategory = categories.find((c) => c.id === activeCategory);
   const targetApiCategory = matchedCategory
     ? matchedCategory.apiCategory
     : "all";
 
-  // 1. Filter by Category
   const categoryFiltered =
     targetApiCategory === "all"
       ? dishes
       : dishes.filter((dish) => dish.category === targetApiCategory);
 
-  // 2. Filter by Search Query
   const searchedDishes =
     debouncedQuery.trim() === ""
       ? categoryFiltered
@@ -70,7 +65,6 @@ export default function SearchBox({ activeCategory = "all" }) {
           );
         });
 
-  // 3. Client-side Pagination Slicing
   const totalPages = Math.ceil(searchedDishes.length / itemsPerPage) || 1;
   const startIndex = (page - 1) * itemsPerPage;
   const paginatedDishes = searchedDishes.slice(
@@ -80,10 +74,8 @@ export default function SearchBox({ activeCategory = "all" }) {
 
   return (
     <div>
-      {/* Category Bar */}
       <CategoryBar activeCategory={activeCategory} />
 
-      {/* Search Bar Input */}
       <div style={{ margin: "20px 0" }}>
         <input
           type="text"
@@ -104,10 +96,8 @@ export default function SearchBox({ activeCategory = "all" }) {
       {isLoading && <p>Loading dishes...</p>}
       {error && <p style={{ color: "red" }}>Failed to load menu items.</p>}
 
-      {/* Dish List Grid */}
       <DishList dishes={paginatedDishes} />
 
-      {/* Pagination Controls */}
       {totalPages > 1 && (
         <div
           style={{
