@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import useSWR from "swr";
+import Link from "next/link";
 import { fetcher } from "../lib/fetcher";
 import DishList from "./_components/DishList";
 import CategoryBar, { categories } from "./_components/CategoryBar";
@@ -10,13 +11,12 @@ export default function SearchBox({ activeCategory = "all" }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [page, setPage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 8; // Displays 2 rows of 4 cards matching the image UI
 
-  // Debounce search input by 300ms
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedQuery(searchTerm);
-      setPage(1); // Reset page on new search
+      setPage(1);
     }, 300);
 
     return () => clearTimeout(timer);
@@ -73,69 +73,101 @@ export default function SearchBox({ activeCategory = "all" }) {
   );
 
   return (
-    <div>
-      <CategoryBar activeCategory={activeCategory} />
+    <div className="space-y-6">
+      {/* Light Search Bar Box */}
+      <div className="bg-white rounded-xl p-3 md:p-4 shadow-sm border border-[#f0e2d3] flex flex-col lg:flex-row items-center justify-between gap-4">
+        <div className="relative w-full lg:w-96">
+          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs">
+            🔍
+          </span>
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search dishes by name (e.g. Kitfo, Shiro, Tibs, Doro Wat)..."
+            className="w-full bg-[#fbf5ef] text-[#2c1a11] text-xs pl-9 pr-4 py-2.5 rounded-lg border border-[#e5d5c5] focus:outline-none focus:border-[#6b1f0a] placeholder:text-gray-400"
+          />
+        </div>
 
-      <div style={{ margin: "20px 0" }}>
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="Search dishes by name or ingredient..."
-          style={{
-            padding: "10px 14px",
-            width: "100%",
-            maxWidth: "400px",
-            borderRadius: "6px",
-            border: "1px solid #ccc",
-            fontSize: "15px",
-          }}
-        />
+        {/* Feature Badges */}
+        <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-[#2c1a11]">
+          <div className="bg-[#f4e7da] px-3 py-1.5 rounded-lg border border-[#e5d5c5]">
+            🌾 100% Pure Teff Injera
+          </div>
+          <div className="bg-[#f4e7da] px-3 py-1.5 rounded-lg border border-[#e5d5c5]">
+            🌱 Fasting / Tsom Friendly
+          </div>
+          <div className="bg-[#f4e7da] px-3 py-1.5 rounded-lg border border-[#e5d5c5]">
+            🌶️ Berbere Spiced
+          </div>
+        </div>
       </div>
 
-      {isLoading && <p>Loading dishes...</p>}
-      {error && <p style={{ color: "red" }}>Failed to load menu items.</p>}
+      {/* Category Selection Bar */}
+      <CategoryBar activeCategory={activeCategory} />
 
-      <DishList dishes={paginatedDishes} />
+      {/* State Feedback */}
+      {isLoading && (
+        <p className="text-center py-8 text-[#6e5e54]">Loading dishes...</p>
+      )}
+      {error && (
+        <p className="text-center py-8 text-red-500">
+          Failed to load menu items.
+        </p>
+      )}
 
+      {/* Render Cards Grid */}
+      {!isLoading && !error && <DishList dishes={paginatedDishes} />}
+
+      {/* Pagination Bar */}
       {totalPages > 1 && (
-        <div
-          style={{
-            marginTop: "20px",
-            display: "flex",
-            gap: "12px",
-            alignItems: "center",
-          }}
-        >
+        <div className="flex justify-center items-center gap-4 pt-6">
           <button
             onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
             disabled={page === 1}
-            style={{
-              padding: "8px 16px",
-              cursor: page === 1 ? "not-allowed" : "pointer",
-              borderRadius: "4px",
-            }}
+            className="px-4 py-2 text-xs font-semibold rounded-md border border-[#e5d5c5] bg-white text-[#2c1a11] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#f4e7da]"
           >
             ← Previous
           </button>
 
-          <span>
-            Page <strong>{page}</strong> of <strong>{totalPages}</strong>
+          <span className="text-xs text-[#6e5e54]">
+            Page <strong className="text-[#6b1f0a]">{page}</strong> of{" "}
+            <strong>{totalPages}</strong>
           </span>
 
           <button
             onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
             disabled={page >= totalPages}
-            style={{
-              padding: "8px 16px",
-              cursor: page >= totalPages ? "not-allowed" : "pointer",
-              borderRadius: "4px",
-            }}
+            className="px-4 py-2 text-xs font-semibold rounded-md border border-[#e5d5c5] bg-white text-[#2c1a11] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#f4e7da]"
           >
             Next →
           </button>
         </div>
       )}
+
+      {/* Bottom Light Banner */}
+      <div className="mt-12 bg-[#f4e7da] text-[#2c1a11] rounded-xl p-6 flex flex-col md:flex-row justify-between items-center gap-4 border border-[#e5d5c5]">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-[#6b1f0a] text-white flex items-center justify-center text-lg shrink-0">
+            🍽️
+          </div>
+          <div>
+            <h3 className="font-serif text-base font-bold text-[#6b1f0a]">
+              Experience Communal Dining Around the Mesob
+            </h3>
+            <p className="text-xs text-[#6e5e54]">
+              All platters are served with unlimited warm Teff injera rolls and
+              fresh house-made Ayib.
+            </p>
+          </div>
+        </div>
+        <Link
+          href="/checkout"
+          className="bg-white text-[#2c1a11] text-xs font-semibold px-4 py-2.5 rounded-lg border border-[#e5d5c5] shadow-sm hover:bg-gray-50 whitespace-nowrap"
+        >
+          Reserve a Group Mesob Table
+        </Link>
+      </div>
     </div>
   );
 }

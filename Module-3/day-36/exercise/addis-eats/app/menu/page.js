@@ -7,7 +7,6 @@ export default async function MenuPage({ searchParams }) {
 
   return (
     <div>
-      <h1>Addis Eats Menu</h1>
       <SearchBox activeCategory={category} />
     </div>
   );

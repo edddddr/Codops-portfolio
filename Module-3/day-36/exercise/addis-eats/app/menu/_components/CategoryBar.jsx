@@ -3,24 +3,32 @@
 import { useRouter } from "next/navigation";
 
 export const categories = [
-  { id: "all", name: "All Dishes", apiCategory: "all" },
+  { id: "all", name: "All Dishes", apiCategory: "all", count: 24 },
   {
     id: "traditional",
     name: "Traditional Stews & Wat",
     apiCategory: "Traditional Stews & Wat",
+    count: 8,
   },
-  { id: "tibs", name: "Tibs & Grills", apiCategory: "Tibs & Grills" },
+  { id: "tibs", name: "Tibs & Grills", apiCategory: "Tibs & Grills", count: 5 },
   {
     id: "fasting",
     name: "Fasting & Vegan / Tsom",
     apiCategory: "Fasting & Vegan / Tsom",
+    count: 6,
   },
   {
     id: "raw",
     name: "Raw & Cured Delicacies / Kitfo",
     apiCategory: "Raw & Cured Delicacies / Kitfo",
+    count: 3,
   },
-  { id: "beverages", name: "Beverages & Tej", apiCategory: "Beverages & Tej" },
+  {
+    id: "beverages",
+    name: "Beverages & Tej",
+    apiCategory: "Beverages & Tej",
+    count: 6,
+  },
 ];
 
 export default function CategoryBar({ activeCategory }) {
@@ -36,30 +44,31 @@ export default function CategoryBar({ activeCategory }) {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: "10px",
-        flexWrap: "wrap",
-        marginBottom: "20px",
-      }}
-    >
-      {categories.map((cat) => (
-        <button
-          key={cat.id}
-          onClick={() => handleSelect(cat.id)}
-          style={{
-            padding: "8px 16px",
-            cursor: "pointer",
-            backgroundColor: activeCategory === cat.id ? "#0070f3" : "#f0f0f0",
-            color: activeCategory === cat.id ? "#fff" : "#000",
-            border: "none",
-            borderRadius: "4px",
-          }}
-        >
-          {cat.name}
-        </button>
-      ))}
+    <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none my-4">
+      {categories.map((cat) => {
+        const isActive = activeCategory === cat.id;
+
+        return (
+          <button
+            key={cat.id}
+            onClick={() => handleSelect(cat.id)}
+            className={`whitespace-nowrap px-4 py-2 rounded-lg text-xs md:text-sm font-semibold transition-all flex items-center gap-1.5 cursor-pointer ${
+              isActive
+                ? "bg-[#6b1f0a] text-white shadow-sm"
+                : "bg-[#f4e7da] text-[#2c1a11] hover:bg-[#e9d9c8] border border-[#e5d5c5]"
+            }`}
+          >
+            <span>{cat.name}</span>
+            <span
+              className={`text-[11px] font-normal ${
+                isActive ? "text-white/80" : "text-[#6e5e54]"
+              }`}
+            >
+              ({cat.count})
+            </span>
+          </button>
+        );
+      })}
     </div>
   );
 }
