@@ -1,56 +1,109 @@
-import { redirect } from "next/navigation";
-import { getSession } from "../lib/session";
+import OrderTable from "./OrderTable";
+import { notFound } from "next/navigation";
 
-export default async function OrdersPage() {
-  const session = await getSession();
+export default async function OrdersPage({ searchParams }) {
+  const {
+    sort = "date",
+    order = "desc",
+    page = "1",
+    state,
+  } = await searchParams;
 
-  if (!session) {
-    redirect("/signin?next=/orders");
+  // Force States for testing
+  if (state === "empty") {
+    notFound();
+  }
+  if (state === "error") {
+    throw new Error("Simulated backend database error.");
   }
 
-  let userOrders = [];
-
-  userOrders = [
+  const rawOrders = [
     {
-      id: "ORD-101",
-      userId: session.userId,
-      items: "Doro Wat x 1",
-      totalETB: 650,
+      id: "ORD-1001",
+      customer: "Abebe Bikila",
+      date: "2025-10-14",
+      amount: 1450,
       status: "Delivered",
+    },
+    {
+      id: "ORD-1002",
+      customer: "Genet Tadesse",
+      date: "2025-10-15",
+      amount: 2100,
+      status: "Delivered",
+    },
+    {
+      id: "ORD-1003",
+      customer: "Kifle Woldemariam",
+      date: "2025-10-16",
+      amount: 820,
+      status: "Delivered",
+    },
+    {
+      id: "ORD-1004",
+      customer: "Sara Tesfaye",
+      date: "2025-10-17",
+      amount: 3100,
+      status: "In Transit",
+    },
+    {
+      id: "ORD-1005",
+      customer: "Dr. Kebede Wolde",
+      date: "2025-10-18",
+      amount: 1850,
+      status: "Preparing",
     },
   ];
 
-  return (
-    <div style={{ padding: "20px", maxWidth: "800px", margin: "0 auto" }}>
-      <h1>Your Order History</h1>
-      <p style={{ color: "#666", fontSize: "14px" }}>
-        Showing orders scoped strictly to Account ID:{" "}
-        <strong>{session.userId}</strong>
-      </p>
+  // Sort Logic
+  const sortedOrders = [...rawOrders].sort((a, b) => {
+    let valA = a[sort] || a.id;
+    let valB = b[sort] || b.id;
 
-      {userOrders.length === 0 ? (
-        <p style={{ marginTop: "20px" }}>No orders found for your account.</p>
-      ) : (
-        <ul style={{ listStyle: "none", padding: 0, marginTop: "20px" }}>
-          {userOrders.map((order) => (
-            <li
-              key={order.id}
-              style={{
-                border: "1px solid #ddd",
-                padding: "15px",
-                borderRadius: "6px",
-                marginBottom: "10px",
-              }}
-            >
-              <h3>Order #{order.id}</h3>
-              <p>
-                Status: <strong>{order.status}</strong>
-              </p>
-              <p>Total: {order.totalETB} ETB</p>
-            </li>
-          ))}
-        </ul>
-      )}
+    if (valA < valB) return order === "asc" ? -1 : 1;
+    if (valA > valB) return order === "asc" ? 1 : -1;
+    return 0;
+  });
+
+  const currentPage = parseInt(page, 10) || 1;
+  const itemsPerPage = 3;
+  const totalPages = Math.ceil(sortedOrders.length / itemsPerPage);
+  const paginatedOrders = sortedOrders.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
+
+  return (
+    <div className="p-8 max-w-7xl mx-auto space-y-6 bg-[#fbf5ef] min-h-screen">
+      <div className="flex justify-between items-center">
+        <div>
+          <span className="text-xs font-bold text-[#8c6820] tracking-widest uppercase">
+            LIVE DISPATCH
+          </span>
+          <h1 className="font-serif text-3xl font-bold text-[#6b1f0a]">
+            Customer Order Ledger
+          </h1>
+        </div>
+
+        {/* State Test Links */}
+        <div className="flex gap-2 text-xs font-semibold">
+          <a href="/orders?state=empty" className="text-gray-500 underline">
+            Force Empty State
+          </a>
+          <span>•</span>
+          <a href="/orders?state=error" className="text-red-500 underline">
+            Force Error State
+          </a>
+        </div>
+      </div>
+
+      <OrderTable
+        orders={paginatedOrders}
+        currentSort={sort}
+        currentOrder={order}
+        page={currentPage}
+        totalPages={totalPages}
+      />
     </div>
   );
 }
