@@ -2,10 +2,17 @@ package main
 
 import (
 	"fmt"
+	"github.com/edddddr/addis-eats-backend/internal/order"
 	// "strconv"
 )
 
 	// type int 
+
+
+func caller(i *int) int{
+	return *i
+}
+
 
 func main(){
 
@@ -89,6 +96,13 @@ func main(){
 	fmt.Printf("Total: %.2f\n", total)
 	fmt.Println("The fee in santim is:", feeSantim, )
 
+	b := 100
+	// var a *int
+	a := &b
+	
+	fmt.Println(caller(a))
+
+	order.
 
 
 }
