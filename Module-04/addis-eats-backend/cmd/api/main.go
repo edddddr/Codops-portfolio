@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/edddddr/addis-eats-backend/internal/order"
+	// "github.com/edddddr/addis-eats-backend/internal/order"
 	// "strconv"
 )
 
@@ -12,6 +12,25 @@ import (
 func caller(i *int) int{
 	return *i
 }
+
+type Dish struct {
+    Name        string
+    PriceSantim int
+    IsFasting   bool
+}
+ 
+
+
+type Order struct {
+    Items map[int]Dish
+    Area  string
+    Paid  bool
+}
+
+func NewOrder() *Order{
+	return &Order{Items:make(map[int]Dish)}
+}
+
 
 
 func main(){
@@ -59,50 +78,55 @@ func main(){
 
 
 
-	dish:= make(map[string]int)
-	var santim float64
+	// dish:= make(map[string]int)
+	// var santim float64
 	
-	dish["Doro wat"] = 18500
-	dish["Shiro"] = 12000
-	dish["Tibs"] = 2400
-	dish["Ingera basket"] = 2400
+	// dish["Doro wat"] = 18500
+	// dish["Shiro"] = 12000
+	// dish["Tibs"] = 2400
+	// dish["Ingera basket"] = 2400
 
 
-	var sum int
-	for i, d := range dish{
-		fmt.Println(i, d)
-		sum += d
-		santim = float64(sum)
-	}
+	// var sum int
+	// for i, d := range dish{
+	// 	fmt.Println(i, d)
+	// 	sum += d
+	// 	santim = float64(sum)
+	// }
 
 
-	total := santim * 1.05
+	// total := santim * 1.05
 	 
 
-	area := "Bole"
-	feeSantim := 0
+	// area := "Bole"
+	// feeSantim := 0
 	
 
-	switch area {
-		case "Bole":
-			feeSantim = 3000
-		case "Kazanchis":
-			feeSantim = 3500
-		case "Piassa", "Megenagna":   // multiple values
-			feeSantim = 0
-		default:
-			feeSantim = 5000          // outside the served areas
-	}
-	fmt.Printf("Total: %.2f\n", total)
-	fmt.Println("The fee in santim is:", feeSantim, )
+	// switch area {
+	// 	case "Bole":
+	// 		feeSantim = 3000
+	// 	case "Kazanchis":
+	// 		feeSantim = 3500
+	// 	case "Piassa", "Megenagna":   // multiple values
+	// 		feeSantim = 0
+	// 	default:
+	// 		feeSantim = 5000          // outside the served areas
+	// }
+	// fmt.Printf("Total: %.2f\n", total)
+	// fmt.Println("The fee in santim is:", feeSantim, )
 
-	b := 100
-	// var a *int
-	a := &b
+	// b := 100
+	// // var a *int
+	// a := &b
 	
-	fmt.Println(caller(a))
+	// fmt.Println(caller(a))
 
-	order.
+	// order.
+	d := Dish{Name: "Shiro", PriceSantim: 12000, IsFasting: true}
+
+	order :=NewOrder()
+	order.Items[0]=d
+	
 
 
 }
